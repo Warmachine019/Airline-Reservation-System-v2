@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #f0f2f5;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    width: fit-content;
+}
+
+.form-group {
+    margin: 15px 0;
+    text-align: left;
+}
+
+input, select, button {
+    padding: 12px;
+    margin: 8px 0;
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 270px;
+    padding: 14px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+h2 {
+    color: #1a237e;
+    margin-bottom: 30px;
+}
+
+.message {
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 5px;
+    width: fit-content;
+    margin: 20px auto;
+}
+
+.error { background: #ffe7e6; color: #d32f2f; }
+.success { background: #e8f5e9; color: #2e7d32; }
+
+.boarding-pass {
+    background: white;
+    border: 2px solid #007BFF;
+    border-radius: 15px;
+    padding: 30px;
+    width: 400px;
+    margin: 50px auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.boarding-pass h2 {
+    color: #007BFF;
+    margin-bottom: 25px;
+}
