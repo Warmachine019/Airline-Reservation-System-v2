@@ -1,53 +1,75 @@
+/* Dark Theme Styles */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
-    background-color: #f5f7fa;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding-top: 140px;
 }
 
 .header-logo {
     display: block;
-    width: 200px;
+    width: 450px;
     margin: 20px auto;
     position: fixed;
-    top: 0;
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 1000;
+    filter: brightness(0.9);
 }
 
-.auth-container {
-    max-width: 400px;
-    margin: 150px auto 50px;
-    padding: 30px;
-    background: white;
+.auth-container,
+.booking-container,
+.boarding-pass-container {
+    background-color: #2d2d2d;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    margin: 40px auto 50px;
+    padding: 30px;
+    position: relative;
+    z-index: 1;
 }
+
+.auth-container { max-width: 400px; }
+.booking-container { max-width: 800px; }
+.boarding-pass-container { max-width: 600px; }
 
 .form-group {
     margin-bottom: 15px;
 }
 
-input {
+input,
+select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    background-color: #333;
+    border: 1px solid #555;
     border-radius: 5px;
+    color: #fff;
     margin-top: 5px;
+}
+
+input:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 button {
     width: 100%;
     padding: 12px;
-    background: #007bff;
+    background: #0d6efd;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 15px;
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background: #0056b3;
+    background: #0b5ed7;
 }
 
 .message {
@@ -57,13 +79,21 @@ button:hover {
 }
 
 .message.error {
-    background: #ffe0e0;
-    color: #d8000c;
+    background: #4a1a1a;
+    color: #ff6b6b;
+    border: 1px solid #ff4444;
 }
 
 .message.success {
-    background: #e0ffe0;
-    color: #008000;
+    background: #1a4a2d;
+    color: #6bff8b;
+    border: 1px solid #00ff44;
+}
+
+.message.info {
+    background: #1a2e4a;
+    color: #6bb4ff;
+    border: 1px solid #007bff;
 }
 
 .auth-link {
@@ -72,39 +102,31 @@ button:hover {
 }
 
 .auth-link a {
-    color: #007bff;
+    color: #6bb4ff;
     text-decoration: none;
 }
 
 .auth-link a:hover {
+    color: #4d9cff;
     text-decoration: underline;
-}
-
-.booking-container {
-    max-width: 800px;
-    margin: 150px auto 50px;
-    padding: 30px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .results-container {
     margin-top: 30px;
     padding-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #444;
 }
 
 .flight-card {
     padding: 20px;
     margin: 15px 0;
-    border: 1px solid #ddd;
+    border: 1px solid #444;
     border-radius: 8px;
-    background: #f9f9f9;
+    background-color: #333;
 }
 
 .flight-card h3 {
-    color: #007bff;
+    color: #6bb4ff;
     margin-top: 0;
 }
 
@@ -119,41 +141,16 @@ button:hover {
     background: #218838;
 }
 
-.message.info {
-    background: #e3f2fd;
-    color: #0d47a1;
-}
-
-select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background: white;
-}
-
-.boarding-pass-container {
-    max-width: 600px;
-    margin: 150px auto 50px;
-    padding: 30px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
 .pass-details {
-    border: 2px solid #007bff;
+    border: 2px solid #444;
     border-radius: 10px;
     padding: 25px;
-}
-
-.pass-section {
-    margin-bottom: 25px;
+    background-color: #333;
 }
 
 .pass-section h3 {
-    color: #007bff;
-    border-bottom: 1px solid #ddd;
+    color: #6bb4ff;
+    border-bottom: 1px solid #444;
     padding-bottom: 10px;
 }
 
@@ -161,7 +158,8 @@ select {
     max-width: 300px;
     display: block;
     margin: 20px auto;
-    border: 1px solid #ddd;
+    border: 1px solid #444;
     padding: 10px;
     border-radius: 5px;
+    background-color: #2d2d2d;
 }
