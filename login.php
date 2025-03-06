@@ -1,8 +1,7 @@
 <?php
 session_start();
-require 'db.php'; // Database connection
+require 'db.php';
 
-// Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['login'])) {
         handleLogin();
@@ -65,7 +64,6 @@ function handleSignup() {
     exit();
 }
 
-// Display current page
 if (isset($_GET['page'])) {
     switch ($_GET['page']) {
         case 'signup':
