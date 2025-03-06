@@ -157,10 +157,11 @@ select {
     padding-bottom: 10px;
 }
 
-.barcode-placeholder {
-    text-align: center;
-    padding: 20px;
-    background: #f0f0f0;
-    margin-top: 30px;
-    font-family: monospace;
+.barcode-image {
+    max-width: 300px;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
 }

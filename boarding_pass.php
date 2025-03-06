@@ -43,8 +43,7 @@ $seat_number = rand(1, 40) . chr(rand(65, 70)); // e.g., 12A
             </div>
 
             <div class="barcode">
-                <!-- Add barcode image or generator here -->
-                <div class="barcode-placeholder">BARCODE</div>
+                <img src="sample_barcode.jpg" alt="Boarding Pass Barcode" class="barcode-image">
             </div>
         </div>
     </div>
