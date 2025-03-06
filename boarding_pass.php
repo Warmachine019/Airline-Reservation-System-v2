@@ -7,13 +7,11 @@ if (!isset($_SESSION['user']) || !isset($_POST['flight_id'])) {
     exit();
 }
 
-// Get flight details
 $flight_id = $conn->real_escape_string($_POST['flight_id']);
 $result = $conn->query("SELECT * FROM flights WHERE id = '$flight_id'");
 $flight = $result->fetch_assoc();
 
-// Generate random seat
-$seat_number = rand(1, 40) . chr(rand(65, 70)); // e.g., 12A
+$seat_number = rand(1, 40) . chr(rand(65, 70));
 ?>
 
 <!DOCTYPE html>
