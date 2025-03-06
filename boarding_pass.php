@@ -1,51 +1,51 @@
 <?php
 session_start();
-if (!isset($_SESSION['user']) || !isset($_SESSION['flight'])) 
-    header("Location: login.html");
+require 'db.php';
 
-$user = $_SESSION['user'];
-$flight = $_SESSION['flight'];
-$seat = rand(1, 40).chr(rand(65, 70));
+if (!isset($_SESSION['user']) || !isset($_POST['flight_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Get flight details
+$flight_id = $conn->real_escape_string($_POST['flight_id']);
+$result = $conn->query("SELECT * FROM flights WHERE id = '$flight_id'");
+$flight = $result->fetch_assoc();
+
+// Generate random seat
+$seat_number = rand(1, 40) . chr(rand(65, 70)); // e.g., 12A
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boarding Pass</title>
-    <link rel="stylesheet" href="common.css">
+    <title>Boarding Pass - Air Voyager</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="boarding-pass">
-        <h2>BOARDING PASS</h2>
+    <img src="AirVoyagerLogo.jpg" class="header-logo">
+    
+    <div class="boarding-pass-container">
+        <h1>Boarding Pass</h1>
         
-        <div class="form-group">
-            <strong>Passenger:</strong><br>
-            <?php echo $user['name'] . ' ' . $user['surname']; ?>
-        </div>
+        <div class="pass-details">
+            <div class="pass-section">
+                <h3>Passenger Information</h3>
+                <p>Name: <?= $_SESSION['user']['name'] ?> <?= $_SESSION['user']['surname'] ?></p>
+                <p>Date of Birth: <?= date('d/m/Y', strtotime($_SESSION['user']['dob'])) ?></p>
+            </div>
 
-        <div class="form-group">
-            <strong>Date of Birth:</strong><br>
-            <?php echo date('d/m/Y', strtotime($user['dob'])); ?>
-        </div>
+            <div class="pass-section">
+                <h3>Flight Details</h3>
+                <p>Flight Number: <?= $flight['flight_number'] ?></p>
+                <p>Route: <?= $flight['departure_city'] ?> → <?= $flight['destination_city'] ?></p>
+                <p>Seat: <?= $seat_number ?></p>
+            </div>
 
-        <div class="form-group">
-            <strong>Flight Number:</strong><br>
-            <?php echo $flight['flight_number']; ?>
-        </div>
-
-        <div class="form-group">
-            <strong>Route:</strong><br>
-            <?php echo $flight['departure_city'] . ' → ' . $flight['destination_city']; ?>
-        </div>
-
-        <div class="form-group">
-            <strong>Seat:</strong><br>
-            <?php echo $seat; ?>
-        </div>
-
-        <div class="message success">
-            Boarding pass generated successfully!
+            <div class="barcode">
+                <!-- Add barcode image or generator here -->
+                <div class="barcode-placeholder">BARCODE</div>
+            </div>
         </div>
     </div>
 </body>

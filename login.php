@@ -1,137 +1,173 @@
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', '', 'airline');
+require 'db.php'; // Database connection
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$message = '';
-$message_type = '';
-
+// Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? 'login';
-
-    if ($action === 'signup') {
-        // SIGNUP PROCESS
-        $username = $conn->real_escape_string($_POST['username'] ?? '');
-        $password = $_POST['password'] ?? '';
-        $name = $conn->real_escape_string($_POST['name'] ?? '');
-        $surname = $conn->real_escape_string($_POST['surname'] ?? '');
-        $dob = $conn->real_escape_string($_POST['dob'] ?? '');
-
-        if (empty($username) || empty($password) || empty($name) || empty($surname) || empty($dob)) {
-            $message = "All fields are required!";
-            $message_type = 'error';
-        } else {
-            $check = $conn->query("SELECT * FROM users WHERE username='$username'");
-            if ($check && $check->num_rows > 0) {
-                $message = "Username already exists!";
-                $message_type = 'error';
-            } else {
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                $insert = $conn->query("INSERT INTO users (username, password, name, surname, dob) 
-                                      VALUES ('$username', '$hashed_password', '$name', '$surname', '$dob')");
-                
-                if ($insert) {
-                    $message = "Signup successful! Please login.";
-                    $message_type = 'success';
-                } else {
-                    $message = "Signup failed: " . $conn->error;
-                    $message_type = 'error';
-                }
-            }
-        }
-    } else {
-        // LOGIN PROCESS
-        $username = $conn->real_escape_string($_POST['username'] ?? '');
-        $password = $_POST['password'] ?? '';
-
-        $result = $conn->query("SELECT * FROM users WHERE username='$username'");
-        if ($result && $result->num_rows > 0) {
-            $user = $result->fetch_assoc();
-            if (password_verify($password, $user['password'])) {
-                $_SESSION['user'] = $user;
-                header("Location: search.php");
-                exit();
-            } else {
-                $message = "Invalid password!";
-                $message_type = 'error';
-            }
-        } else {
-            $message = "User not found!";
-            $message_type = 'error';
-        }
+    if (isset($_POST['login'])) {
+        handleLogin();
+    } elseif (isset($_POST['signup'])) {
+        handleSignup();
     }
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airline Login</title>
-    <link rel="stylesheet" href="common.css">
-    <style>
-        .signup-fields { display: none; }
-        .signup-mode .signup-fields { display: block; }
-        .toggle-text { margin-top: 15px; }
-        a { color: #007BFF; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Airline System Login</h2>
-        
-        <?php if ($message): ?>
-            <div class="message <?= $message_type ?>">
-                <?= $message ?>
-            </div>
-        <?php endif; ?>
 
-        <form action="login.php" method="post" id="authForm">
-            <input type="hidden" name="action" value="login" id="formAction">
-            
-            <div class="form-group">
-                <input type="text" name="username" placeholder="Username" required>
-            </div>
-            
-            <div class="form-group">
-                <input type="password" name="password" placeholder="Password" required>
-            </div>
+function handleLogin() {
+    global $conn;
+    $username = $conn->real_escape_string($_POST['username']);
+    $password = $_POST['password'];
 
-            <div class="signup-fields">
+    $result = $conn->query("SELECT * FROM users WHERE username='$username'");
+    
+    if ($result->num_rows === 0) {
+        header("Location: signup.php?error=user_not_found");
+        exit();
+    }
+    
+    $user = $result->fetch_assoc();
+    if (password_verify($password, $user['password'])) {
+        $_SESSION['user'] = $user;
+        header("Location: booking.php");
+        exit();
+    } else {
+        header("Location: login.php?error=wrong_password");
+        exit();
+    }
+}
+
+function handleSignup() {
+    global $conn;
+    $fields = ['username', 'password', 'name', 'surname', 'dob'];
+    
+    foreach ($fields as $field) {
+        if (empty($_POST[$field])) {
+            header("Location: signup.php?error=missing_fields");
+            exit();
+        }
+    }
+    
+    $username = $conn->real_escape_string($_POST['username']);
+    $check = $conn->query("SELECT * FROM users WHERE username='$username'");
+    
+    if ($check->num_rows > 0) {
+        header("Location: signup.php?error=username_exists");
+        exit();
+    }
+    
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $name = $conn->real_escape_string($_POST['name']);
+    $surname = $conn->real_escape_string($_POST['surname']);
+    $dob = $conn->real_escape_string($_POST['dob']);
+    
+    $conn->query("INSERT INTO users (username, password, name, surname, dob) 
+                VALUES ('$username', '$password', '$name', '$surname', '$dob')");
+    
+    header("Location: login.php?success=signup_complete");
+    exit();
+}
+
+// Display current page
+if (isset($_GET['page'])) {
+    switch ($_GET['page']) {
+        case 'signup':
+            showSignupPage();
+            break;
+        case 'booking':
+            showBookingPage();
+            break;
+        default:
+            showLoginPage();
+    }
+} else {
+    showLoginPage();
+}
+
+function showLoginPage() {
+    global $conn;
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Login - Air Voyager</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <img src="AirVoyagerLogo.jpg" class="header-logo">
+        <div class="auth-container">
+            <h1>Welcome to Air Voyager</h1>
+            <?php showMessages(); ?>
+            <form method="POST">
+                <input type="hidden" name="login" value="1">
                 <div class="form-group">
-                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="text" name="username" placeholder="Username" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="surname" placeholder="Surname" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p class="auth-link">New user? <a href="?page=signup">Create account</a></p>
+        </div>
+    </body>
+    </html>
+    <?php
+}
+
+function showSignupPage() {
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Sign Up - Air Voyager</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <img src="AirVoyagerLogo.jpg" class="header-logo">
+        <div class="auth-container">
+            <h1>Create New Account</h1>
+            <?php showMessages(); ?>
+            <form method="POST">
+                <input type="hidden" name="signup" value="1">
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="First Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="surname" placeholder="Last Name" required>
                 </div>
                 <div class="form-group">
                     <input type="date" name="dob" required>
                 </div>
-            </div>
+                <button type="submit">Create Account</button>
+            </form>
+            <p class="auth-link">Already have an account? <a href="?page=login">Login here</a></p>
+        </div>
+    </body>
+    </html>
+    <?php
+}
 
-            <button type="submit" id="submitButton">Login</button>
-            <div class="toggle-text">
-                <span>Don't have an account? </span>
-                <a href="#" onclick="toggleSignup(); return false;">Sign Up</a>
-            </div>
-        </form>
-    </div>
-
-    <script>
-        function toggleSignup() {
-            const form = document.getElementById('authForm');
-            form.classList.add('signup-mode');
-            document.getElementById('formAction').value = 'signup';
-            document.getElementById('submitButton').textContent = 'Sign Up';
-            
-            document.querySelectorAll('.signup-fields input').forEach(input => {
-                input.required = true;
-            });
+function showMessages() {
+    $error = $_GET['error'] ?? '';
+    $success = $_GET['success'] ?? '';
+    
+    if ($error) {
+        echo '<div class="message error">';
+        switch ($error) {
+            case 'user_not_found': echo "Account not found. Please sign up."; break;
+            case 'wrong_password': echo "Incorrect password. Please try again."; break;
+            case 'missing_fields': echo "Please fill all required fields."; break;
+            case 'username_exists': echo "Username already exists. Please choose another."; break;
         }
-    </script>
-</body>
-</html>
+        echo '</div>';
+    }
+    
+    if ($success === 'signup_complete') {
+        echo '<div class="message success">Signup complete! Please login with your credentials.</div>';
+    }
+}
+?>
