@@ -1,1 +1,1 @@
-
+Run the "MySQL Command Line Client" as administrator and paste the following commands into the window that appears:
