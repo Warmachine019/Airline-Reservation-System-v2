@@ -1,4 +1,4 @@
-<h1 align="center">✈️ Airline Reservation System</h1>
+<h1 align="center">✈️ Airline Reservation System (AirVoyager)</h1>
 
 <p align="center">
   A simple Airline Reservation System using <strong>PHP</strong> and <strong>MySQL</strong>, running on <strong>XAMPP</strong>.
