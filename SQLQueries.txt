@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS flights (
     flight_number VARCHAR(10) NOT NULL
 );
 
-4.Inserting Sample flight data:
+4.Inserting Sample flight data (Feel free to change according to your needs):
 INSERT INTO flights (departure_city, destination_city, price, flight_number) VALUES
 ('Mumbai', 'Delhi', 7500.00, 'AI101'),
 ('Delhi', 'Bangalore', 9200.00, 'AI202'),
