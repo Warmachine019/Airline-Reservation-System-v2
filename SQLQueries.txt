@@ -22,3 +22,16 @@ CREATE TABLE IF NOT EXISTS flights (
     price DECIMAL(10,2) NOT NULL,
     flight_number VARCHAR(10) NOT NULL
 );
+
+4.Inserting Sample flight data:
+INSERT INTO flights (departure_city, destination_city, price, flight_number) VALUES
+('Mumbai', 'Delhi', 7500.00, 'AI101'),
+('Delhi', 'Bangalore', 9200.00, 'AI202'),
+('Chennai', 'Kolkata', 6800.00, 'AI303'),
+('Hyderabad', 'Pune', 5400.00, 'AI404'),
+('Kolkata', 'Mumbai', 8100.00, 'AI505'),
+('Bangalore', 'Chennai', 4800.00, 'AI606'),
+('Ahmedabad', 'Jaipur', 6200.00, 'AI707'),
+('Pune', 'Hyderabad', 5700.00, 'AI808'),
+('Jaipur', 'Ahmedabad', 5900.00, 'AI909'),
+('Lucknow', 'Patna', 4500.00, 'AI010');
