@@ -4,4 +4,14 @@ Run the "MySQL Command Line Client" as administrator and paste the following com
 CREATE DATABASE IF NOT EXISTS airline;
 USE airline;
 
-2.
+2.Creating Users table:
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    surname VARCHAR(50) NOT NULL,
+    dob DATE NOT NULL
+);
+
+3.
