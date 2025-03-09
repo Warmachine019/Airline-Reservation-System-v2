@@ -21,7 +21,7 @@ $seat_number = rand(1, 40) . chr(rand(65, 70));
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <img src="AirVoyagerLogo.jpg" class="header-logo">
+    <img src="/images/AirVoyagerLogo.jpg" class="header-logo">
     
     <div class="boarding-pass-container">
         <h1>Boarding Pass</h1>
