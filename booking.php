@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <img src="AirVoyagerLogo.jpg" class="header-logo">
+    <img src="/images/AirVoyagerLogo.jpg" class="header-logo">
     
     <div class="booking-container">
         <h1>Flight Search</h1>
