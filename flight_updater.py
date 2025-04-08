@@ -27,8 +27,8 @@ city_pairs = [
 def get_db_connection():
     return mysql.connector.connect(
         host="localhost",
-        user="your mysql username",
-        password="root",  
+        user="your MySQL username",
+        password="your MySQL password",  
         database="airline"
     )
 
