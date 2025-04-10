@@ -7,11 +7,13 @@ if (!isset($_SESSION['user']) || !isset($_POST['flight_id'])) {
     exit();
 }
 
+// Get flight details
 $flight_id = $conn->real_escape_string($_POST['flight_id']);
 $result = $conn->query("SELECT * FROM flights WHERE id = '$flight_id'");
 $flight = $result->fetch_assoc();
 
-$seat_number = rand(1, 40) . chr(rand(65, 70));
+// Generate random seat
+$seat_number = rand(1, 40) . chr(rand(65, 70)); // e.g., 12A
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +23,7 @@ $seat_number = rand(1, 40) . chr(rand(65, 70));
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <img src="/images/AirVoyagerLogo.jpg" class="header-logo">
+    <img src="AirVoyagerLogo.jpg" class="header-logo">
     
     <div class="boarding-pass-container">
         <h1>Boarding Pass</h1>
@@ -41,7 +43,7 @@ $seat_number = rand(1, 40) . chr(rand(65, 70));
             </div>
 
             <div class="barcode">
-                <img src="/images/sample_barcode.jpg" alt="Boarding Pass Barcode" class="barcode-image">
+                <img src="sample_barcode.jpg" alt="Boarding Pass Barcode" class="barcode-image">
             </div>
         </div>
     </div>

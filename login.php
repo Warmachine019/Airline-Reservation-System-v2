@@ -2,6 +2,7 @@
 session_start();
 require 'db.php';
 
+// Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['login'])) {
         handleLogin();
@@ -64,6 +65,7 @@ function handleSignup() {
     exit();
 }
 
+// Display current page
 if (isset($_GET['page'])) {
     switch ($_GET['page']) {
         case 'signup':
@@ -89,7 +91,7 @@ function showLoginPage() {
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <img src="/images/AirVoyagerLogo.jpg" class="header-logo">
+        <img src="AirVoyagerLogo.jpg" class="header-logo">
         <div class="auth-container">
             <h1>Welcome to Air Voyager</h1>
             <?php showMessages(); ?>

@@ -5,8 +5,8 @@ import time
 
 # --- Amadeus API setup ---
 amadeus = Client(
-    client_id='your Amadeus API_KEY',
-    client_secret='your Amadeus API_SECRET' 
+    client_id='Je8O32vw98AAYf6mEMnAH2ypVLBaI4AJ',
+    client_secret='yJw5dBVBoIdMHWqZ' 
 )
 
 # --- Cities to check flights between ---
@@ -27,8 +27,8 @@ city_pairs = [
 def get_db_connection():
     return mysql.connector.connect(
         host="localhost",
-        user="your MySQL username",
-        password="your MySQL password",  
+        user="root",
+        password="root",  
         database="airline"
     )
 

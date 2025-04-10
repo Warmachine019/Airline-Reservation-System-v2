@@ -2,11 +2,13 @@
 session_start();
 require 'db.php';
 
+// Redirect to login if not authenticated
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
 
+// Handle flight search
 $flights = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $departure = $conn->real_escape_string($_POST['departure']);
@@ -26,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <img src="/images/AirVoyagerLogo.jpg" class="header-logo">
+    <img src="AirVoyagerLogo.jpg" class="header-logo">
     
     <div class="booking-container">
         <h1>Flight Search</h1>
