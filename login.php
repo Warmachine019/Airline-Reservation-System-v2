@@ -36,31 +36,32 @@ function handleLogin() {
 
 function handleSignup() {
     global $conn;
-    $fields = ['username', 'password', 'name', 'surname', 'dob'];
-    
+    $fields = ['username', 'password', 'name', 'surname', 'dob', 'email'];
+
     foreach ($fields as $field) {
         if (empty($_POST[$field])) {
             header("Location: signup.php?error=missing_fields");
             exit();
         }
     }
-    
+
     $username = $conn->real_escape_string($_POST['username']);
     $check = $conn->query("SELECT * FROM users WHERE username='$username'");
-    
+
     if ($check->num_rows > 0) {
         header("Location: signup.php?error=username_exists");
         exit();
     }
-    
+
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $name = $conn->real_escape_string($_POST['name']);
     $surname = $conn->real_escape_string($_POST['surname']);
     $dob = $conn->real_escape_string($_POST['dob']);
-    
-    $conn->query("INSERT INTO users (username, password, name, surname, dob) 
-                VALUES ('$username', '$password', '$name', '$surname', '$dob')");
-    
+    $email = $conn->real_escape_string($_POST['email']);
+
+    $conn->query("INSERT INTO users (username, password, name, surname, dob, email) 
+                  VALUES ('$username', '$password', '$name', '$surname', '$dob', '$email')");
+
     header("Location: login.php?success=signup_complete");
     exit();
 }
@@ -82,7 +83,6 @@ if (isset($_GET['page'])) {
 }
 
 function showLoginPage() {
-    global $conn;
     ?>
     <!DOCTYPE html>
     <html>
@@ -142,6 +142,9 @@ function showSignupPage() {
                 <div class="form-group">
                     <input type="date" name="dob" required>
                 </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
                 <button type="submit">Create Account</button>
             </form>
             <p class="auth-link">Already have an account? <a href="?page=login">Login here</a></p>
@@ -165,7 +168,7 @@ function showMessages() {
         }
         echo '</div>';
     }
-    
+
     if ($success === 'signup_complete') {
         echo '<div class="message success">Signup complete! Please login with your credentials.</div>';
     }
