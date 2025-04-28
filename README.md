@@ -1,5 +1,5 @@
 <p align="center">
-  <strong><span style="font-size:40px;">✈️ Airline Reservation System (AirVoyager)</span></strong>
+  <strong><span style="font-size:60px;">✈️ Airline Reservation System (AirVoyager)</span></strong>
 </p>
 
 <p align="center">
