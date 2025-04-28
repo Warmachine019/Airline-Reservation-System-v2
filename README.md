@@ -1,5 +1,6 @@
-# ✈️ Airline Reservation System (AirVoyager)
-
+<p align="center">
+  # ✈️ Airline Reservation System (AirVoyager)
+</p>
 <p align="center">
   A full-stack Airline Reservation System using <strong>PHP</strong>, <strong>MySQL</strong>, and <strong>Python</strong>, integrated with real-time flight data via <strong>Amadeus API</strong> and automatic email notifications. Runs on <strong>XAMPP</strong>.
 </p>
