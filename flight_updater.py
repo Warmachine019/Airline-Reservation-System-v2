@@ -5,8 +5,8 @@ import time
 
 # --- Amadeus API setup ---
 amadeus = Client(
-    client_id='Je8O32vw98AAYf6mEMnAH2ypVLBaI4AJ',
-    client_secret='yJw5dBVBoIdMHWqZ' 
+    client_id='Your Amadeus client_id',
+    client_secret='Your Amadeus client_secret' 
 )
 
 # --- Cities to check flights between ---
