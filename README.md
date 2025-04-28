@@ -101,4 +101,4 @@ Feel free to copy, modify, and distribute this project for educational or person
 
 ---
 
-<p align="center">💡 Developed as a DBMS + Integration Project in 2nd year CSE (AI/ML) at SRM Chennai.</p>
+<p align="center">💡 Developed as a DBMS Project in 2nd year CSE (AI/ML).</p>
